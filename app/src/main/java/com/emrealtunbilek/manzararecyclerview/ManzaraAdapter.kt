@@ -2,9 +2,11 @@ package com.emrealtunbilek.manzararecyclerview
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import kotlinx.android.synthetic.main.tek_satir_manzara.view.*
 
 /**
@@ -15,8 +17,12 @@ class ManzaraAdapter(tumManzaralar:ArrayList<Manzara>): RecyclerView.Adapter<Man
     var manzaralar=tumManzaralar
 
     override fun getItemCount(): Int {
+
+Log.e("RECYCLERVIEW", "GET ITEM COUNT TETIKLENDI")
         return manzaralar.size
     }
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ManzaraViewHolder? {
@@ -24,6 +30,7 @@ class ManzaraAdapter(tumManzaralar:ArrayList<Manzara>): RecyclerView.Adapter<Man
         var inflater=LayoutInflater.from(parent?.context)
         var tekSatirmanzara=inflater.inflate(R.layout.tek_satir_manzara, parent, false)
 
+        Log.e("RECYCLERVIEW", "ON CREATE VIEW HOLDER TETIKLENDI")
         return ManzaraViewHolder(tekSatirmanzara)
 
 
@@ -33,9 +40,14 @@ class ManzaraAdapter(tumManzaralar:ArrayList<Manzara>): RecyclerView.Adapter<Man
 
     override fun onBindViewHolder(holder: ManzaraViewHolder?, position: Int) {
 
-        holder?.manzaraBaslik?.text = manzaralar.get(position).baslik
+
+        var oanOlusturulanManzara = manzaralar.get(position)
+        holder?.setData(oanOlusturulanManzara, position)
+
+      /*  holder?.manzaraBaslik?.text = manzaralar.get(position).baslik
         holder?.manzaraAciklama?.text = manzaralar.get(position).aciklama
         holder?.manzaraResim?.setImageResource(manzaralar.get(position).resim)
+        Log.e("RECYCLERVIEW", "ON BIND VIEW HOLDER TETIKLENDI")*/
 
 
     }
@@ -51,6 +63,33 @@ class ManzaraAdapter(tumManzaralar:ArrayList<Manzara>): RecyclerView.Adapter<Man
         var manzaraBaslik=tekSatirManzara.tvManzaraBaslik
         var manzaraAciklama=tekSatirManzara.tvManzaraAciklama
         var manzaraResim = tekSatirManzara.imgManzara
+        var btnKopyala = tekSatirManzara.imgKopyala
+        var btnSil = tekSatirManzara.imgSil
+
+
+        init {
+            Log.e("RECYCLERVIEW", "Manzara view holder TETIKLENDI")
+
+
+
+
+        }
+
+        fun setData(oankiManzara:Manzara, position: Int) {
+
+            manzaraBaslik.text = oankiManzara.baslik
+            manzaraAciklama.text = oankiManzara.aciklama
+            manzaraResim.setImageResource(oankiManzara.resim)
+
+            btnKopyala.setOnClickListener {
+                Log.e("EMRE", ""+ position + " kopyalanmak isteniyor")
+            }
+
+            btnSil.setOnClickListener {
+                Log.e("EMRE", ""+ position + " silinmek isteniyor")
+            }
+
+        }
 
 
     }
