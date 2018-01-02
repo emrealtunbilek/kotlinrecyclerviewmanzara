@@ -2,7 +2,11 @@ package com.emrealtunbilek.manzararecyclerview
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,13 +19,53 @@ class MainActivity : AppCompatActivity() {
 
         veriKaynaginiDoldur()
 
-        var myAdapter=ManzaraAdapter(tumManzaralar)
+        var myAdapter = ManzaraAdapter(tumManzaralar)
 
         recyclerViewManzara.adapter = myAdapter
 
-        var linearLayoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false)
+        var linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewManzara.layoutManager = linearLayoutManager
 
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.anamenu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        var id = item?.itemId
+
+        when (id) {
+
+            R.id.menulinearViewHorizontal -> {
+                var linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerViewManzara.layoutManager = linearLayoutManager
+            }
+            R.id.menulinearViewVertical -> {
+                var menulinearViewVertical = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                recyclerViewManzara.layoutManager = menulinearViewVertical
+            }
+            R.id.menuGrid -> {
+                var menuGrid = GridLayoutManager(this, 2)
+                recyclerViewManzara.layoutManager = menuGrid
+            }
+            R.id.menuStaggeredHorizontal -> {
+                var menuStaggeredHorizontal=StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+                recyclerViewManzara.layoutManager=menuStaggeredHorizontal
+            }
+            R.id.menuStaggeredVertical -> {
+                var menuStaggeredVertical=StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                recyclerViewManzara.layoutManager=menuStaggeredVertical
+            }
+
+
+        }
+
+        return super.onOptionsItemSelected(item)
 
     }
 
